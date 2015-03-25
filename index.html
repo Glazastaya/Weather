@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js" xmlns="http://www.w3.org/1999/html"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div class="main" >
+      <div>
+          <a href="" ng-click="update()">update</a>
+          <p>{{timeUpdate | date:'HH:mm'}}</p>
+          <p>{{current.name}}</p>
+          <p><span>{{current.weather.currently.icon}}</span>{{current.weather.currently.apparentTemperature | degrees:settings.degrees}}</p>
+          <p>{{current.weather.daily.data[0].moonPhase}}</p>
+          <p>Moonrise time?</p>
+          <ul>
+              <li ng-repeat="hour in current.weather.hourly.data">
+                  <span>{{hour.time * 1000 | date:'HH:mm'}}</span>
+                  <span>{{hour.icon}}</span>
+                  <span>{{hour.temperature | degrees:settings.degrees}}</span>
+              </li>
+          </ul>
+          <ul>
+              <li>{{current.weather.currently.humidity}}</li>
+              <li>{{current.weather.currently.windSpeed}}</li>
+              <li>{{current.weather.daily.data[0].sunriseTime * 1000 | date:'HH:mm'}}</li>
+              <li>{{current.weather.daily.data[0].sunsetTime * 1000 | date:'HH:mm'}}</li>
+          </ul>
+      </div>
+      <div class="daily"><p>Дни</p>
+          <ul>
+              <li ng-repeat="day in current.weather.daily.data">
+                  <span>{{day.time * 1000 | date:'EEE'}}</span>
+                  <span>{{day.icon}}</span>
+                  <span>{{day.temperatureMin | degrees:settings.degrees}}</span>
+                  <span>{{day.temperatureMax | degrees:settings.degrees}}</span>
+              </li>
+          </ul>
+      </div>
+      <div class="menu" >
+          <ul>
+              <li><a href="">меню</a> </li>
+              <li><input type="text" ng-model="newItem.name" ng-trim="true"></li>
+              <li><a href="" ng-click="addNew()">добавить</a></li>
+              <li><a href="" ng-click="deleteItems()">удалить</a></li>
+          </ul>
+          <ul>
+              <li ng-repeat="item in cities">
+                  <span>{{item.weather.currently.icon}}</span>
+                  <span>{{item.weather.currently.temperature | degrees:settings.degrees}}</span>
+                  <span>{{item.name}}</span>
+                  <span>{{item.weather.currently.summary}}</span>
+                  <input type="checkbox" ng-model = "item.chosen">
+              </li>
+
+          </ul>
+          <div class="settings">
+              <div>for day<input type="text" ng-model="settings.days"></div>
+              <div>update<input type="text" ng-model="settings.gap"></div>
+              <button ng-click="settings.degrees = 'F'">F</button ><button ng-click="settings.degrees = 'C'">C</button>
+          </div>
+      </div>
+  </div>
+
+
+
+
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="components/localstorage/localstorageServ.js"></script>
+  <script src="components/geocode/geocodeServ.js"></script>
+  <script src="components/weatherCity/WeatherCityObj.js"></script>
+  <script src="components/main/degreesFilter.js"></script>
+  <script src="components/main/MainCtrl.js"></script>
+
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+</body>
+</html>
